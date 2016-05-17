@@ -59,10 +59,10 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Location = new System.Drawing.Point(3, 462);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(444, 13);
+            this.label2.Size = new System.Drawing.Size(441, 13);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Copyright v1.01 © 2010, Miloš Anđelković, v2.0 © 2016 Sava Minić. All rights rese" +
-    "rved.";
+            this.label2.Text = "Copyright v1.01 © 2010 Miloš Anđelković, v2.0 © 2016 Sava Minić. All rights reser" +
+    "ved.";
             // 
             // label3
             // 

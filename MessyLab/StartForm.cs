@@ -75,6 +75,12 @@ namespace MessyLab
 					l[i].Tag = null;
 				}
 			}
+
+            if (LoginForm.SessionID == null)
+            {
+                var loginForm = new LoginForm() { MainForm = MainForm };
+                loginForm.ShowDialog(this);
+            }
 		}
 
 		private void recentLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
