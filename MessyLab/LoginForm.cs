@@ -22,7 +22,7 @@ namespace MessyLab
         public static string SessionID { get; set; }
 
         // todo: move this to some conf file
-        public const string SERVER_IP = "http://localhost:14453";
+        public const string SERVER_IP = "http://messylabadmin.azurewebsites.net/";
 
         #endregion
 
@@ -86,6 +86,7 @@ namespace MessyLab
                 return;
             }
 
+            // TODO: move this to separate class for contacting server
             // try login to server
             var client = new RestClient(SERVER_IP);
             client.AddDefaultHeader("Cache-Control", "no-cache");
@@ -94,7 +95,7 @@ namespace MessyLab
             request.AddParameter("pass", txtPassword.Text);
             request.AddParameter("nocache", DateTime.Now.Ticks);
 
-
+            // todo: handle timeout
             client.ExecuteAsync(request, response => {
                 LoginData data = JsonConvert.DeserializeObject<LoginData>(response.Content);
                 if (data.SessionID != null)
