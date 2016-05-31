@@ -27,6 +27,7 @@ using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using MessyLab.Platforms;
 using MessyLab.Properties;
+using MessyLab.Session;
 
 namespace MessyLab
 {
@@ -250,7 +251,7 @@ namespace MessyLab
 			if (OpenedProject == null) return;
 			RemoveMenu();
 			RemoveToolbar();
-			Text = "Messy Lab";
+			Text = SessionController.LoggedInUsername + " @ Messy Lab";
 
 			// Close pads.
 			foreach (var pad in OpenedProject.Platform.Gui.Pads)
@@ -299,7 +300,7 @@ namespace MessyLab
 
 			ShowEditorFor(project.MainItem);
 
-			Text = System.IO.Path.GetFileNameWithoutExtension(project.Filename) + " - Messy Lab";
+			Text = System.IO.Path.GetFileNameWithoutExtension(project.Filename) + " - " + SessionController.LoggedInUsername + " @ Messy Lab";
 
 			// Notofy the RecentManager that the project has been opened.
 			RecentManager.Notify(project.Path);
@@ -684,11 +685,28 @@ namespace MessyLab
 
 		public RecentManager RecentManager { get; private set; }
 
-		public MainForm()
+        delegate void SetTextCallback();
+
+        public MainForm()
 		{
 			InitializeComponents();
 			RecentManager = new RecentManager();
-		}
+
+            SessionController.OnLoggedIn += () =>
+            {
+                if(InvokeRequired)
+                {
+                    Invoke(new SetTextCallback(() =>
+                    {
+                        Text = SessionController.LoggedInUsername + " @ Messy Lab";
+                    }));
+                }
+                else
+                {
+                    Text = SessionController.LoggedInUsername + " @ Messy Lab";
+                }
+            };
+        }
 
 		/// <summary>
 		/// Keeps track of the currently active editor form.

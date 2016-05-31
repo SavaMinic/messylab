@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MessyLab.Session;
+using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -27,16 +28,6 @@ namespace MessyLab
         #endregion
 
         #region Properties/Delegates
-
-        public class LoginData
-        {
-            public string SessionID { get; set; }
-        }
-
-        public class ErrorData
-        {
-            public int Error { get; set; }
-        }
 
         public MainForm MainForm { get; set; }
 
@@ -86,34 +77,30 @@ namespace MessyLab
                 return;
             }
 
-            // TODO: move this to separate class for contacting server
-            // try login to server
-            var client = new RestClient(SERVER_IP);
-            client.AddDefaultHeader("Cache-Control", "no-cache");
-            var request = new RestRequest("Client/Login", Method.POST);
-            request.AddParameter("user", txtUsername.Text);
-            request.AddParameter("pass", txtPassword.Text);
-            request.AddParameter("nocache", DateTime.Now.Ticks);
-
-            // todo: handle timeout
-            client.ExecuteAsync(request, response => {
-                LoginData data = JsonConvert.DeserializeObject<LoginData>(response.Content);
-                if (data.SessionID != null)
+            // async login, so need to handle the callbacks
+            SessionController.TryToLogin(txtUsername.Text, txtPassword.Text,
+                () =>
                 {
-                    SessionID = data.SessionID;
                     if (lblStatus.InvokeRequired)
                         Invoke(new ShowTexStatustCallback(ShowInfo), new object[] { "LOGGED IN!" });
                     else
                         ShowInfo("LOGGED IN!");
-                }
-                else
+                },
+                () =>
+                {
+                        if (lblStatus.InvokeRequired)
+                            Invoke(new ShowTexStatustCallback(ShowError), new object[] { "Wrong credentials!" });
+                        else
+                            ShowError("Wrong credentials!");
+                },
+                () =>
                 {
                     if (lblStatus.InvokeRequired)
-                        Invoke(new ShowTexStatustCallback(ShowError), new object[] { "Wrong credentials!" });
+                        Invoke(new ShowTexStatustCallback(ShowError), new object[] { "Server not responding!" });
                     else
-                        ShowError("Wrong credentials!");
+                        ShowError("Server not responding!");
                 }
-            });
+            );
         }
 
         private void btnClose_Click(object sender, EventArgs e)
