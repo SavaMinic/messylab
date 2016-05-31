@@ -33,6 +33,10 @@ namespace MessyLab.Platforms.Pico
 	/// </summary>
 	public partial class PicoTextEditorForm : MessyLab.TextEditorForm
 	{
+
+        public string CodeText { get { return this.textEditorControl.Text; } }
+
+
 		public PicoTextEditorForm()
 		{
 			InitializeComponent();

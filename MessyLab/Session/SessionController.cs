@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,20 @@ namespace MessyLab.Session
         public class ErrorData
         {
             public int Error { get; set; }
+        }
+
+        private enum ActionType
+        {
+            Login = 1,
+            Compile,
+            StartDebug,
+            EndDebug,
+            AddBreakpoint,
+            RemoveBreakpoint,
+            HitBreakpoint,
+            SetWatch,
+            CompilationSuccess,
+            CompilationFailure,
         }
 
         #endregion
@@ -92,6 +107,48 @@ namespace MessyLab.Session
             });
         }
 
-        #endregion
+        private static void PostAction(ActionType actionType, string data = null)
+        {
+            if (SessionID == null) return;
+
+            var request = new RestRequest("Client/Action", Method.POST);
+            request.AddParameter("sessionID", SessionID);
+            request.AddParameter("type", actionType);
+            request.AddParameter("data", data);
+            request.AddParameter("nocache", DateTime.Now.Ticks);
+
+            Client.ExecuteAsync(request, response => {});
         }
+
+        #region Post helpers
+
+        public static void PostCompilationSuccess()
+        {
+            PostAction(ActionType.CompilationSuccess);
+        }
+
+        public static void PostCompilationFailure(List<string> errors)
+        {
+            PostAction(ActionType.CompilationFailure, JObject.FromObject(new { errors = errors }).ToString());
+        }
+
+        public static void PostCompile(string code)
+        {
+            PostAction(ActionType.Compile, JObject.FromObject(new { code = code }).ToString());
+        }
+
+        public static void PostStartDebug()
+        {
+            PostAction(ActionType.StartDebug);
+        }
+
+        public static void PostEndDebug()
+        {
+            PostAction(ActionType.EndDebug);
+        }
+
+        #endregion
+
+        #endregion
+    }
 }

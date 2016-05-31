@@ -25,6 +25,8 @@ using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
 using MessyLab.Properties;
+using MessyLab.Session;
+using Newtonsoft.Json.Linq;
 
 namespace MessyLab.Platforms.Pico
 {
@@ -387,8 +389,9 @@ namespace MessyLab.Platforms.Pico
 		{
 			Project.Save();
 			Assembler a = new Assembler();
-			a.LoadFromFile(Project.MainItem.Path);
-			if (a.Process())
+            a.LoadFromFile(Project.MainItem.Path);
+            SessionController.PostCompile(a.Code);
+            if (a.Process())
 			{
 				string path = Path.Combine(Path.GetDirectoryName(Project.Path), Path.GetFileNameWithoutExtension(Project.Filename));
 				a.SaveAsBinary(path + ".bin");
@@ -396,20 +399,25 @@ namespace MessyLab.Platforms.Pico
 				if (Settings.Default.Pico_GenerateTxt) a.SaveAsText(path + ".txt");
 				a.DebugInformation.SaveToFile(path + ".bin.mldbg");
 				binaryPath = path + ".bin";
-				return true;
+
+                SessionController.PostCompilationSuccess();
+                return true;
 			}
 			else
 			{
 				// Report errors.
 				Gui.ErrorsPad.ClearItems();
+                List<string> errorDescriptions = new List<string>();
 				foreach (var error in a.Errors)
 				{
 					string desc = string.Format("E{0:0000}: {1}.", error.ID, error.Description);
 					Gui.ErrorsPad.AddItem(new ListItem(desc, Project.MainItem, error.Line, error.Column));
-				}
+                    errorDescriptions.Add(desc);
+                }
 				Gui.ErrorsPad.ShowOnMainForm();
 				binaryPath = string.Empty;
-				return false;
+                SessionController.PostCompilationFailure(errorDescriptions);
+                return false;
 			}
 		}
 

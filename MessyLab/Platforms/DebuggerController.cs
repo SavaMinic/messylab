@@ -21,6 +21,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MessyLab.Debugger;
+using MessyLab.Session;
+using Newtonsoft.Json.Linq;
+using MessyLab.Platforms.Pico;
 
 namespace MessyLab.Platforms
 {
@@ -390,13 +393,17 @@ namespace MessyLab.Platforms
 
 		public string HighlightedFile { get; set; }
 		public int HighlightedLine { get; set; }
-		#endregion
+        #endregion
 
-		#region Stepping
-		/// <summary>
-		/// Starts on continues program execution.
-		/// </summary>
-		public virtual void Run() { CurrentIState.Run(); }
+        #region Stepping
+        /// <summary>
+        /// Starts on continues program execution.
+        /// </summary>
+        public virtual void Run()
+        {
+            CurrentIState.Run();
+            SessionController.PostStartDebug();
+        }
 		/// <summary>
 		/// Pauses program execution.
 		/// </summary>
@@ -404,7 +411,11 @@ namespace MessyLab.Platforms
 		/// <summary>
 		/// Stops the program execution. It is not possible to continue.
 		/// </summary>
-		public virtual void Stop() { CurrentIState.Stop(); }
+		public virtual void Stop()
+        {
+            CurrentIState.Stop();
+            SessionController.PostEndDebug();
+        }
 		/// <summary>
 		/// Restarts the current program.
 		/// </summary>
