@@ -16,6 +16,7 @@
  */
 #endregion
 
+using MessyLab.Session;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -639,6 +640,7 @@ namespace MessyLab.Platforms
 		{
 			Breakpoints.Add(breakpoint);
 			AddBreakpointToDebugger(breakpoint);
+            SessionController.PostAddBreakpoint(breakpoint);
 		}
 
 		/// <summary>
@@ -649,7 +651,8 @@ namespace MessyLab.Platforms
 		{
 			Breakpoints.Remove(breakpoint);
 			RemoveBreakpointFromDebugger(breakpoint);
-		}
+            SessionController.PostRemoveBreakpoint(breakpoint);
+        }
 
 		#region Line Breakpoints methods
 		/// <summary>

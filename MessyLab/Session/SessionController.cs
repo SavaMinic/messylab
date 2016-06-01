@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static MessyLab.Platforms.BreakpointController;
 
 namespace MessyLab.Session
 {
@@ -145,6 +146,16 @@ namespace MessyLab.Session
         public static void PostEndDebug()
         {
             PostAction(ActionType.EndDebug);
+        }
+
+        public static void PostAddBreakpoint(BreakpointDefinition breakpoint)
+        {
+            PostAction(ActionType.AddBreakpoint, JObject.FromObject(new { breakpoint = breakpoint.ToMemento() }).ToString());
+        }
+
+        public static void PostRemoveBreakpoint(BreakpointDefinition breakpoint)
+        {
+            PostAction(ActionType.RemoveBreakpoint, JObject.FromObject(new { breakpoint = breakpoint.ToMemento() }).ToString());
         }
 
         #endregion
