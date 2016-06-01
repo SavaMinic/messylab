@@ -16,6 +16,7 @@
  */
 #endregion
 
+using MessyLab.Session;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -76,11 +77,7 @@ namespace MessyLab
 				}
 			}
 
-            if (LoginForm.SessionID == null)
-            {
-                var loginForm = new LoginForm() { MainForm = MainForm };
-                loginForm.ShowDialog(this);
-            }
+            welcomeLabel.Text = "Welcome, " + SessionController.LoggedInUsername;
 		}
 
 		private void recentLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

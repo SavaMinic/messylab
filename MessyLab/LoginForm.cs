@@ -119,8 +119,8 @@ namespace MessyLab
             lblStatus.Text = text;
             lblStatus.Refresh();
 
-            // sleep for a second and close this window
-            Thread.Sleep(1000);
+            // close this window, and open main form
+            MainForm.OpenStartPage();
             CloseAndDispose();
         }
 

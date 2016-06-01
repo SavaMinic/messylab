@@ -769,9 +769,15 @@ namespace MessyLab
 				OpenProject(CommandLineParameter);
 			}
 			else
-			{
-				OpenStartPage();
-			}
+            {
+                // close the splash, and show the login form
+                SplashForm.CloseSplash(this);
+                if (LoginForm.SessionID == null)
+                {
+                    var loginForm = new LoginForm() { MainForm = this };
+                    loginForm.ShowDialog(this);
+                }
+            }
 		}
 
 		StartForm _start;
@@ -779,7 +785,7 @@ namespace MessyLab
 		/// <summary>
 		/// Opens the Start Page.
 		/// </summary>
-		private void OpenStartPage()
+		public void OpenStartPage()
 		{
 			CloseStartPage();
 			_start = new StartForm() { MainForm = this };
