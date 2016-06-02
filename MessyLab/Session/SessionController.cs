@@ -25,6 +25,27 @@ namespace MessyLab.Session
             public int Error { get; set; }
         }
 
+        public class AssignmentData
+        {
+            public int ID;
+            public string Title;
+            public string Description;
+            public DateTime StartTime;
+            public DateTime EndTime;
+            public bool CanSendSolution;
+
+            // optional
+            public string SolutionCode;
+            public DateTime SolutionCreated;
+            public bool SolutionEvaluated;
+        }
+
+        public class GetAssignemntsData
+        {
+            public bool ok;
+            public AssignmentData[] assignments;
+        }
+
         private enum ActionType
         {
             Login = 1,
@@ -119,6 +140,30 @@ namespace MessyLab.Session
             request.AddParameter("nocache", DateTime.Now.Ticks);
 
             Client.ExecuteAsync(request, response => {});
+        }
+
+        public static void GetAssignments(Action<List<AssignmentData>> callback)
+        {
+            if (SessionID == null) return;
+
+            var request = new RestRequest("Client/Assignments", Method.GET);
+            request.AddParameter("sessionID", SessionID);
+            request.AddParameter("nocache", DateTime.Now.Ticks);
+
+            Client.ExecuteAsync(request, response => {
+                if (response.ResponseStatus == ResponseStatus.Completed)
+                {
+                    GetAssignemntsData data = JsonConvert.DeserializeObject<GetAssignemntsData>(response.Content);
+                    if (data != null && data.ok)
+                    {
+                        callback(new List<AssignmentData>(data.assignments));
+                    }
+                }
+                else
+                {
+                    // TODO: show some error
+                }
+            });
         }
 
         #region Post helpers

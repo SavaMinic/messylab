@@ -144,7 +144,7 @@
 			// 
 			this.setAsMainToolStripMenuItem.Name = "setAsMainToolStripMenuItem";
 			this.setAsMainToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
-			this.setAsMainToolStripMenuItem.Text = "Set as Main";
+			this.setAsMainToolStripMenuItem.Text = "Set as Selected";
 			this.setAsMainToolStripMenuItem.Click += new System.EventHandler(this.setAsMainToolStripMenuItem_Click);
 			// 
 			// toolStripMenuItem1

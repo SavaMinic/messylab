@@ -64,14 +64,15 @@
             this.tbtnRefresh.Name = "tbtnRefresh";
             this.tbtnRefresh.Size = new System.Drawing.Size(66, 22);
             this.tbtnRefresh.Text = "Refresh";
+            this.tbtnRefresh.Click += new System.EventHandler(this.tbtnRefresh_Click);
             // 
             // tbtnUpload
             // 
             this.tbtnUpload.Image = ((System.Drawing.Image)(resources.GetObject("tbtnUpload.Image")));
             this.tbtnUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbtnUpload.Name = "tbtnUpload";
-            this.tbtnUpload.Size = new System.Drawing.Size(152, 22);
-            this.tbtnUpload.Text = "Upload current solution";
+            this.tbtnUpload.Size = new System.Drawing.Size(171, 22);
+            this.tbtnUpload.Text = "Upload solution to selected";
             // 
             // listView
             // 
@@ -97,8 +98,7 @@
             // 
             // Selected
             // 
-            this.Selected.Text = "Main";
-            this.Selected.Width = 39;
+            this.Selected.Text = "Selected";
             // 
             // Title
             // 
@@ -108,12 +108,12 @@
             // EndTime
             // 
             this.EndTime.Text = "End time";
-            this.EndTime.Width = 67;
+            this.EndTime.Width = 120;
             // 
             // canSendSolution
             // 
             this.canSendSolution.Text = "Solved";
-            this.canSendSolution.Width = 89;
+            this.canSendSolution.Width = 50;
             // 
             // contextMenuStrip
             // 
@@ -135,7 +135,7 @@
             // 
             this.setAsMainToolStripMenuItem.Name = "setAsMainToolStripMenuItem";
             this.setAsMainToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
-            this.setAsMainToolStripMenuItem.Text = "Set as Main";
+            this.setAsMainToolStripMenuItem.Text = "Set as Selected";
             this.setAsMainToolStripMenuItem.Click += new System.EventHandler(this.setAsMainToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1

@@ -354,6 +354,8 @@ namespace MessyLab.Platforms
 				Pads.Add(ProjectPad);
 
                 AssignmentsPad = new AssignmentsPad(Platform.Project);
+                // TODO: add event handlers
+                AssignmentsPad.ItemDoubleClicked += () => { };
                 Pads.Add(AssignmentsPad);
             }
 

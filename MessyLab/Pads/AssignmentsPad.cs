@@ -16,6 +16,7 @@
  */
 #endregion
 
+using MessyLab.Session;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,6 +24,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using Assignment = MessyLab.Session.SessionController.AssignmentData;
 
 namespace MessyLab
 {
@@ -31,62 +33,107 @@ namespace MessyLab
 	/// </summary>
 	public partial class AssignmentsPad : Pad
 	{
-		public AssignmentsPad(Project project)
-			: base(project)
-		{
-			InitializeComponent();
-			CreateMenuItem("&Assignments", MessyLab.Properties.Resources.Assignments);
-			CreateToolbarItem("Assignments", MessyLab.Properties.Resources.Assignments);
-			ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
+        #region Delegates/events
 
-			project.Saved += UpdateItemList;
-		}
-		public AssignmentsPad() : this(null) { }
+        delegate void AddToListViewCallback(ListViewItem it);
 
-		/// <summary>
-		/// Updates list according to the items of the current project.
-		/// </summary>
-		public void UpdateItemList()
-		{
-			listView.Items.Clear();
-			if (Project == null) return;
-			foreach (var item in Project.Items)
-			{
-				var it = new ListViewItem(ReferenceEquals(Project.MainItem, item) ? "*" : string.Empty);
-				it.SubItems.Add(item.Filename);
-				it.Tag = item;
-				listView.Items.Add(it);
-			}
-		}
+        /// <summary>
+        /// Occurs when an item is double-clicked.
+        /// </summary>
+        public event Action ItemDoubleClicked;
 
-		/// <summary>
-		/// Selected project item.
-		/// </summary>
-		public ProjectItem SelectedItem { get; protected set; }
-        
-		/// <summary>
-		/// Occurs when an item is double-clicked.
-		/// </summary>
-		public event Action ItemDoubleClicked;
-        
-		protected void OnItemDoubleClicked()
+        #endregion
+
+        #region Properites/fields
+
+        /// <summary>
+        /// Selected assignment item.
+        /// </summary>
+        public Assignment SelectedAssignment { get; protected set; }
+
+        public Assignment ClickedAssignment { get; protected set; }
+
+        private List<Assignment> LoadedAssignments;
+
+        #endregion
+
+        #region Constructors
+
+        public AssignmentsPad(Project project)
+            : base(project)
+        {
+            InitializeComponent();
+            CreateMenuItem("&Assignments", MessyLab.Properties.Resources.Assignments);
+            CreateToolbarItem("Assignments", MessyLab.Properties.Resources.Assignments);
+            ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
+
+            project.Saved += UpdateItemList;
+        }
+        public AssignmentsPad() : this(null) { }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Updates list according to the items of the current project.
+        /// </summary>
+        public void UpdateItemList()
+        {
+            if (Project == null) return;
+            SessionController.GetAssignments(RefreshAssignments);
+        }
+
+        private void AddToMainListView(ListViewItem it)
+        {
+            listView.Items.Add(it);
+        }
+
+        private void RefreshAssignments(List<Assignment> assignments)
+        {
+            LoadedAssignments = assignments;
+            listView.Items.Clear();
+            foreach (var assignment in assignments)
+            {
+                var it = new ListViewItem(ReferenceEquals(SelectedAssignment, assignment) ? "*" : string.Empty);
+                it.SubItems.Add(assignment.Title);
+                it.SubItems.Add(assignment.EndTime.ToString("dd.MM.yyyy HH:mm:ss"));
+                it.SubItems.Add(assignment.SolutionCode != null ? "✓" : "");
+                it.Tag = assignment;
+
+                if (listView.InvokeRequired)
+                    Invoke(new AddToListViewCallback(AddToMainListView), new object[] { it });
+                else
+                    AddToMainListView(it);
+            }
+
+            
+            // TODO: enable/disable 
+            //tbtnUpload.Enabled = SelectedAssignment != null;
+        }
+
+        protected void OnItemDoubleClicked()
 		{
             ItemDoubleClicked?.Invoke();
         }
 
-		private void listView_SelectedIndexChanged(object sender, EventArgs e)
+        protected void OpenSelected()
+        {
+            if (SelectedAssignment != null)
+            {
+                OnItemDoubleClicked();
+            }
+        }
+
+        #endregion
+
+        #region Event handlers
+
+        private void listView_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (listView.SelectedItems.Count == 1)
 			{
-				SelectedItem = listView.SelectedItems[0].Tag as ProjectItem;
-			}
-		}
-
-		protected void OpenSelected()
-		{
-			if (SelectedItem != null)
-			{
-				OnItemDoubleClicked();
+                ClickedAssignment = listView.SelectedItems[0].Tag as Assignment;
 			}
 		}
 
@@ -112,11 +159,11 @@ namespace MessyLab
 
 		private void setAsMainToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (SelectedItem != null)
-			{
-				Project.MainItem = SelectedItem;
-				Project.Save();
-			}
+			if (ClickedAssignment != null)
+            {
+                SelectedAssignment = ClickedAssignment;
+                RefreshAssignments(LoadedAssignments);
+            }
 		}
 
 		private void listView_KeyDown(object sender, KeyEventArgs e)
@@ -127,5 +174,11 @@ namespace MessyLab
 			}
 		}
 
-	}
+        private void tbtnRefresh_Click(object sender, EventArgs e)
+        {
+            UpdateItemList();
+        }
+
+        #endregion
+    }
 }
