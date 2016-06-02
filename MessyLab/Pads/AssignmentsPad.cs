@@ -63,32 +63,16 @@ namespace MessyLab
 		/// Selected project item.
 		/// </summary>
 		public ProjectItem SelectedItem { get; protected set; }
-
-		/// <summary>
-		/// Occurs when the Add new item command is clicked.
-		/// </summary>
-		public event Action AddNewItemClicked;
-		/// <summary>
-		/// Occurs when the Add existing item command is clicked.
-		/// </summary>
-		public event Action AddExistingItemClicked;
-		/// <summary>
-		/// Occurs when the Remove command is clicked.
-		/// </summary>
-		public event Action RemoveClicked;
+        
 		/// <summary>
 		/// Occurs when an item is double-clicked.
 		/// </summary>
 		public event Action ItemDoubleClicked;
-
-		protected void OnAddNewItemClicked()
-		{ if (AddNewItemClicked != null) AddNewItemClicked(); }
-		protected void OnAddExistingItemClicked()
-		{ if (AddExistingItemClicked != null) AddExistingItemClicked(); }
-		protected void OnRemoveClicked()
-		{ if (RemoveClicked != null) RemoveClicked(); }
+        
 		protected void OnItemDoubleClicked()
-		{ if (ItemDoubleClicked != null) ItemDoubleClicked(); }
+		{
+            ItemDoubleClicked?.Invoke();
+        }
 
 		private void listView_SelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -109,21 +93,6 @@ namespace MessyLab
 		private void listView_DoubleClick(object sender, EventArgs e)
 		{
 			OpenSelected();
-		}
-
-		private void addNewFileToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			OnAddNewItemClicked();
-		}
-
-		private void addExistingFileToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			OnAddExistingItemClicked();
-		}
-
-		private void removeToolStripButton_Click(object sender, EventArgs e)
-		{
-			OnRemoveClicked();
 		}
 
 		private void AssignmentsPad_Load(object sender, EventArgs e)
@@ -148,11 +117,6 @@ namespace MessyLab
 				Project.MainItem = SelectedItem;
 				Project.Save();
 			}
-		}
-
-		private void removeToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			OnRemoveClicked();
 		}
 
 		private void listView_KeyDown(object sender, KeyEventArgs e)

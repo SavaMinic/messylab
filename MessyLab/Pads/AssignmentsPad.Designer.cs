@@ -31,18 +31,17 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AssignmentsPad));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.removeToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.tbtnRefresh = new System.Windows.Forms.ToolStripButton();
+            this.tbtnUpload = new System.Windows.Forms.ToolStripButton();
             this.listView = new System.Windows.Forms.ListView();
             this.Selected = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Title = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.EndTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.canSendSolution = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setAsMainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.EndTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.canSendSolution = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -50,22 +49,29 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.removeToolStripButton});
+            this.tbtnRefresh,
+            this.tbtnUpload});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(284, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip";
             // 
-            // removeToolStripButton
+            // tbtnRefresh
             // 
-            this.removeToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("removeToolStripButton.Image")));
-            this.removeToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.removeToolStripButton.Name = "removeToolStripButton";
-            this.removeToolStripButton.Size = new System.Drawing.Size(152, 22);
-            this.removeToolStripButton.Text = "Upload current solution";
-            this.removeToolStripButton.Click += new System.EventHandler(this.removeToolStripButton_Click);
+            this.tbtnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("tbtnRefresh.Image")));
+            this.tbtnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnRefresh.Name = "tbtnRefresh";
+            this.tbtnRefresh.Size = new System.Drawing.Size(66, 22);
+            this.tbtnRefresh.Text = "Refresh";
+            // 
+            // tbtnUpload
+            // 
+            this.tbtnUpload.Image = ((System.Drawing.Image)(resources.GetObject("tbtnUpload.Image")));
+            this.tbtnUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnUpload.Name = "tbtnUpload";
+            this.tbtnUpload.Size = new System.Drawing.Size(152, 22);
+            this.tbtnUpload.Text = "Upload current solution";
             // 
             // listView
             // 
@@ -99,15 +105,23 @@
             this.Title.Text = "Title";
             this.Title.Width = 61;
             // 
+            // EndTime
+            // 
+            this.EndTime.Text = "End time";
+            this.EndTime.Width = 67;
+            // 
+            // canSendSolution
+            // 
+            this.canSendSolution.Text = "Solved";
+            this.canSendSolution.Width = 89;
+            // 
             // contextMenuStrip
             // 
             this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
-            this.setAsMainToolStripMenuItem,
-            this.toolStripMenuItem1,
-            this.removeToolStripMenuItem});
+            this.setAsMainToolStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(135, 76);
+            this.contextMenuStrip.Size = new System.Drawing.Size(135, 48);
             this.contextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_Opening);
             // 
             // openToolStripMenuItem
@@ -128,32 +142,6 @@
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(131, 6);
-            // 
-            // removeToolStripMenuItem
-            // 
-            this.removeToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("removeToolStripMenuItem.Image")));
-            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-            this.removeToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
-            this.removeToolStripMenuItem.Text = "Remove";
-            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(66, 22);
-            this.toolStripButton1.Text = "Refresh";
-            // 
-            // EndTime
-            // 
-            this.EndTime.Text = "End time";
-            this.EndTime.Width = 67;
-            // 
-            // canSendSolution
-            // 
-            this.canSendSolution.Text = "Solved";
-            this.canSendSolution.Width = 89;
             // 
             // AssignmentsPad
             // 
@@ -181,13 +169,12 @@
 		private System.Windows.Forms.ListView listView;
 		private System.Windows.Forms.ColumnHeader Selected;
 		private System.Windows.Forms.ColumnHeader Title;
-		private System.Windows.Forms.ToolStripButton removeToolStripButton;
+		private System.Windows.Forms.ToolStripButton tbtnUpload;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
 		private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem setAsMainToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-		private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton tbtnRefresh;
         private System.Windows.Forms.ColumnHeader EndTime;
         private System.Windows.Forms.ColumnHeader canSendSolution;
     }

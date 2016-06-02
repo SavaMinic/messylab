@@ -51,6 +51,12 @@ namespace MessyLab
 
         #region Events
 
+        private void LoginForm_Shown(object sender, EventArgs e)
+        {
+            if (txtUsername.Text == null) txtUsername.Focus();
+            else txtPassword.Focus();
+        }
+
         private void btnLogin_Click(object sender, EventArgs e)
         {
             btnLogin.Enabled = false;
