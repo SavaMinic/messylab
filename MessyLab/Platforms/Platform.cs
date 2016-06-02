@@ -148,7 +148,8 @@ namespace MessyLab.Platforms
 			{
 				var view = new ToolStripMenuItem("&View");
 				view.DropDownItems.Add(ProjectPad.MenuItem);
-				view.DropDownItems.Add(ErrorsPad.MenuItem);
+                view.DropDownItems.Add(AssignmentsPad.MenuItem);
+                view.DropDownItems.Add(ErrorsPad.MenuItem);
 				view.DropDownItems.Add(TasksPad.MenuItem);
 				return view;
 			}
@@ -208,7 +209,8 @@ namespace MessyLab.Platforms
 			protected virtual void CreateViewToolbar()
 			{
 				ToolbarItems.Add(ProjectPad.ToolbarItem);
-				ToolbarItems.Add(ErrorsPad.ToolbarItem);
+                ToolbarItems.Add(AssignmentsPad.ToolbarItem);
+                ToolbarItems.Add(ErrorsPad.ToolbarItem);
 				ToolbarItems.Add(TasksPad.ToolbarItem);
 			}
 
@@ -244,15 +246,16 @@ namespace MessyLab.Platforms
 			public ProjectPad ProjectPad { get; protected set; }
 			public ErrorListPad ErrorsPad { get; protected set; }
 			public TaskListPad TasksPad { get; protected set; }
+            public AssignmentsPad AssignmentsPad { get; protected set; }
 
-			#region Pad Save/Restore
+            #region Pad Save/Restore
 
-			/// <summary>
-			/// Gets the Pad by the type name.
-			/// </summary>
-			/// <param name="typeName">Type name of the pad.</param>
-			/// <returns>The pad for the specified name or null if the name is invalid.</returns>
-			protected virtual Pad GetPadByTypeName(string typeName)
+            /// <summary>
+            /// Gets the Pad by the type name.
+            /// </summary>
+            /// <param name="typeName">Type name of the pad.</param>
+            /// <returns>The pad for the specified name or null if the name is invalid.</returns>
+            protected virtual Pad GetPadByTypeName(string typeName)
 			{
 				switch (typeName)
 				{
@@ -262,7 +265,9 @@ namespace MessyLab.Platforms
 						return TasksPad;
 					case "MessyLab.ErrorListPad":
 						return ErrorsPad;
-					default:
+                    case "MessyLab.AssignmentsPad":
+                        return AssignmentsPad;
+                    default:
 						return null;
 				}
 			}
@@ -315,7 +320,8 @@ namespace MessyLab.Platforms
 			protected virtual void OpenDefaultPads()
 			{
 				ProjectPad.ShowOnMainForm();
-				TasksPad.ShowOnMainForm();
+                AssignmentsPad.ShowOnMainForm();
+                TasksPad.ShowOnMainForm();
 				ErrorsPad.ShowOnMainForm();
 			}
 
@@ -346,7 +352,10 @@ namespace MessyLab.Platforms
 				ProjectPad.AddExistingItemClicked += () => AddExistingProjectItem();
 				ProjectPad.RemoveClicked += () => RemoveProjectItem(ProjectPad.SelectedItem);
 				Pads.Add(ProjectPad);
-			}
+
+                AssignmentsPad = new AssignmentsPad(Platform.Project);
+                Pads.Add(AssignmentsPad);
+            }
 
 			public List<Pad> Pads { get; set; }
 

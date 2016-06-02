@@ -137,6 +137,12 @@
     <Compile Include="Pads\HardwarePad.Designer.cs">
       <DependentUpon>HardwarePad.cs</DependentUpon>
     </Compile>
+    <Compile Include="Pads\AssignmentsPad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pads\AssignmentsPad.Designer.cs">
+      <DependentUpon>AssignmentsPad.cs</DependentUpon>
+    </Compile>
     <Compile Include="Pads\WatchPad.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -286,6 +292,9 @@
     <EmbeddedResource Include="Pads\Pad.resx">
       <DependentUpon>Pad.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Pads\AssignmentsPad.resx">
+      <DependentUpon>AssignmentsPad.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Pads\ProjectPad.resx">
       <DependentUpon>ProjectPad.cs</DependentUpon>
     </EmbeddedResource>
@@ -388,6 +397,8 @@
     <Content Include="Platforms\Pico\Empty.pca">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Assignments.png" />
+    <None Include="Resources\Assignments.bmp" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

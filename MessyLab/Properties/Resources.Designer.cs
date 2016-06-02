@@ -63,6 +63,16 @@ namespace MessyLab.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Assignments {
+            get {
+                object obj = ResourceManager.GetObject("Assignments", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Breakpoints {
             get {
                 object obj = ResourceManager.GetObject("Breakpoints", resourceCulture);

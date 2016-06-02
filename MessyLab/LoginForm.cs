@@ -1,4 +1,5 @@
-﻿using MessyLab.Session;
+﻿using MessyLab.Platforms;
+using MessyLab.Session;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -7,11 +8,13 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace MessyLab
 {
@@ -41,6 +44,7 @@ namespace MessyLab
         {
             InitializeComponent();
             lblStatus.Visible = false;
+            LoadLastUsername();
         }
 
         #endregion
@@ -82,9 +86,9 @@ namespace MessyLab
                 () =>
                 {
                     if (lblStatus.InvokeRequired)
-                        Invoke(new ShowTexStatustCallback(ShowInfo), new object[] { "LOGGED IN!" });
+                        Invoke(new ShowTexStatustCallback(ShowSuccess), new object[] { "LOGGED IN!" });
                     else
-                        ShowInfo("LOGGED IN!");
+                        ShowSuccess("LOGGED IN!");
                 },
                 () =>
                 {
@@ -113,11 +117,13 @@ namespace MessyLab
 
         #region Helper methods
 
-        private void ShowInfo(string text)
+        private void ShowSuccess(string text)
         {
             lblStatus.ForeColor = Color.Black;
             lblStatus.Text = text;
             lblStatus.Refresh();
+
+            SaveLastUsername();
 
             // close this window, and open main form
             MainForm.OpenStartPage();
@@ -139,5 +145,42 @@ namespace MessyLab
         }
 
         #endregion
+
+        #region Last username settings
+
+
+        private void LoadLastUsername()
+        {
+            string path = Path.Combine(Platform.GetSettingsPath(), "Settings.xml");
+            if (File.Exists(path))
+            {
+                XmlSerializer s = new XmlSerializer(typeof(SettingsData));
+                TextReader r = new StreamReader(path);
+                var settings = s.Deserialize(r) as SettingsData;
+                r.Close();
+                txtUsername.Text = settings.LastUsername;
+            }
+        }
+
+        private void SaveLastUsername()
+        {
+            string path = Path.Combine(Platform.GetSettingsPath(), "Settings.xml");
+            try
+            {
+                XmlSerializer s = new XmlSerializer(typeof(SettingsData));
+                TextWriter w = new StreamWriter(path);
+                s.Serialize(w, new SettingsData() { LastUsername = txtUsername.Text });
+                w.Close();
+            }
+            catch { }
+        }
+
+        #endregion
+    }
+
+    [Serializable]
+    public class SettingsData
+    {
+        public string LastUsername;
     }
 }
