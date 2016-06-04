@@ -36,6 +36,7 @@ namespace MessyLab
         #region Delegates/events
 
         delegate void AddToListViewCallback(ListViewItem it);
+        delegate void ClearListViewCallback();
 
         /// <summary>
         /// Occurs when an item is double-clicked.
@@ -89,10 +90,19 @@ namespace MessyLab
             listView.Items.Add(it);
         }
 
+        private void ClearMainListView()
+        {
+            listView.Items.Clear();
+        }
+
         private void RefreshAssignments(List<Assignment> assignments)
         {
             LoadedAssignments = assignments;
-            listView.Items.Clear();
+            if (listView.InvokeRequired)
+                Invoke(new ClearListViewCallback(ClearMainListView));
+            else
+                ClearMainListView();
+
             foreach (var assignment in assignments)
             {
                 var it = new ListViewItem(ReferenceEquals(SelectedAssignment, assignment) ? "*" : string.Empty);

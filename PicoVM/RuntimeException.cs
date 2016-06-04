@@ -185,4 +185,23 @@ namespace MessyLab.PicoComputer
 			get { return "Execution History empty. Cannot Step Back further."; }
 		}
 	}
+
+    /// <summary>
+	/// This exception can be thrown by a debugger component when it is unable to performe a Step Back operation due
+	/// to empty History of the Data object.
+	/// </summary>
+	public class EmptyInputRuntimeException : RuntimeException
+    {
+        public EmptyInputRuntimeException() : base(new ushort[] { 0 }, 0) { }
+
+        public override int ID
+        {
+            get { return 6; }
+        }
+
+        public override string Message
+        {
+            get { return "Given input is empty. Giving zero"; }
+        }
+    }
 }
