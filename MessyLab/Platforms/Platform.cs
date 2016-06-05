@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using MessyLab.Session;
 
 namespace MessyLab.Platforms
 {
@@ -58,10 +59,12 @@ namespace MessyLab.Platforms
 			public MainForm MainForm
 			{ get { return Platform != null ? Platform.MainForm : null; } }
 
-			/// <summary>
-			/// Initializes the GUI elements.
-			/// </summary>
-			public virtual void Initialize()
+            private ToolStripMenuItem loginItem;
+
+            /// <summary>
+            /// Initializes the GUI elements.
+            /// </summary>
+            public virtual void Initialize()
 			{
 				CreatePads();
 				CreateMenuItems();
@@ -154,6 +157,20 @@ namespace MessyLab.Platforms
 				return view;
 			}
 
+            public void RefreshLoginItem()
+            {
+                var loggedIn = SessionController.IsLoggedIn;
+                if (loggedIn)
+                {
+                    loginItem.Text = "&Log out, " + SessionController.LoggedInUsername;
+                }
+                else
+                {
+                    loginItem.Text = "&Login...";
+                }
+                AssignmentsPad.UpdateItemList();
+            }
+
 			/// <summary>
 			/// Creates the Project menu and its items.
 			/// </summary>
@@ -161,8 +178,31 @@ namespace MessyLab.Platforms
 			protected virtual ToolStripMenuItem CreateProjectMenu()
 			{
 				var project = new ToolStripMenuItem("&Project");
+                
+                loginItem = new ToolStripMenuItem("&Login...");
+                loginItem.Click += (sender, e) =>
+                {
+                    if (SessionController.IsLoggedIn)
+                    {
+                        var res = MessageBox.Show("Are you sure you want to log out?", "Confirm log out!", MessageBoxButtons.YesNo);
+                        if (res == DialogResult.Yes)
+                        {
+                            SessionController.ClearLogin();
+                            RefreshLoginItem();
+                        }
+                    }
+                    else
+                    {
+                        var loginForm = new LoginForm(false) { MainForm = MainForm };
+                        loginForm.ShowDialog(MainForm);
+                    }
+                };
+                project.DropDownItems.Add(loginItem);
+                RefreshLoginItem();
 
-				var item = new ToolStripMenuItem("Add Ne&w File...");
+                project.DropDownItems.Add(new ToolStripSeparator());
+
+                var item = new ToolStripMenuItem("Add Ne&w File...");
 				item.Click += (sender, e) => AddNewProjectItem();
 				project.DropDownItems.Add(item);
 

@@ -782,10 +782,18 @@ namespace MessyLab
 
 		StartForm _start;
 
-		/// <summary>
-		/// Opens the Start Page.
-		/// </summary>
-		public void OpenStartPage()
+        public void RefreshLoginItem()
+        {
+            if (OpenedProject != null && OpenedProject.Platform != null)
+            {
+                OpenedProject.Platform.Gui.RefreshLoginItem();
+            }
+        }
+
+        /// <summary>
+        /// Opens the Start Page.
+        /// </summary>
+        public void OpenStartPage()
 		{
 			CloseStartPage();
 			_start = new StartForm() { MainForm = this };

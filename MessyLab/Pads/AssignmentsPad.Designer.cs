@@ -42,6 +42,7 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setAsMainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.lblInfo = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -121,20 +122,20 @@
             this.openToolStripMenuItem,
             this.setAsMainToolStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(135, 48);
+            this.contextMenuStrip.Size = new System.Drawing.Size(152, 48);
             this.contextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_Opening);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // setAsMainToolStripMenuItem
             // 
             this.setAsMainToolStripMenuItem.Name = "setAsMainToolStripMenuItem";
-            this.setAsMainToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.setAsMainToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.setAsMainToolStripMenuItem.Text = "Set as Selected";
             this.setAsMainToolStripMenuItem.Click += new System.EventHandler(this.setAsMainToolStripMenuItem_Click);
             // 
@@ -143,11 +144,24 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(131, 6);
             // 
+            // lblInfo
+            // 
+            this.lblInfo.BackColor = System.Drawing.SystemColors.Window;
+            this.lblInfo.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInfo.Location = new System.Drawing.Point(24, 113);
+            this.lblInfo.Name = "lblInfo";
+            this.lblInfo.Size = new System.Drawing.Size(223, 93);
+            this.lblInfo.TabIndex = 2;
+            this.lblInfo.Text = "Click on Project > Login, to get assignments.";
+            this.lblInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblInfo.Visible = false;
+            // 
             // AssignmentsPad
             // 
             this.AutoHidePortion = 300D;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(284, 485);
+            this.Controls.Add(this.lblInfo);
             this.Controls.Add(this.listView);
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -177,5 +191,6 @@
         private System.Windows.Forms.ToolStripButton tbtnRefresh;
         private System.Windows.Forms.ColumnHeader EndTime;
         private System.Windows.Forms.ColumnHeader canSendSolution;
+        private System.Windows.Forms.Label lblInfo;
     }
 }

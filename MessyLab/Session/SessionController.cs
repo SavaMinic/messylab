@@ -66,6 +66,7 @@ namespace MessyLab.Session
 
         public static string SessionID { get; private set; }
         public static string LoggedInUsername { get; private set; }
+        public static bool IsLoggedIn {  get { return SessionID != null && SessionID != ""; } }
 
         public static Action OnLoggedIn;
 
@@ -127,6 +128,12 @@ namespace MessyLab.Session
                     onError?.Invoke();
                 }
             });
+        }
+
+        public static void ClearLogin()
+        {
+            SessionID = null;
+            LoggedInUsername = "";
         }
 
         private static void PostAction(ActionType actionType, string data = null)

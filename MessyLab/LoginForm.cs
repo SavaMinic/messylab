@@ -36,15 +36,18 @@ namespace MessyLab
 
         delegate void ShowTexStatustCallback(string text);
 
+        private bool showStartPage;
+
         #endregion
 
         #region Constructor
 
-        public LoginForm()
+        public LoginForm(bool showStartPage = true)
         {
             InitializeComponent();
             lblStatus.Visible = false;
             LoadLastUsername();
+            this.showStartPage = showStartPage;
         }
 
         #endregion
@@ -119,6 +122,19 @@ namespace MessyLab
             MainForm.Close();
         }
 
+
+        private void btnOffline_Click(object sender, EventArgs e)
+        {
+            SessionController.ClearLogin();
+            // close this window, and open main form
+            if (showStartPage)
+            {
+                MainForm.OpenStartPage();
+            }
+            MainForm.RefreshLoginItem();
+            CloseAndDispose();
+        }
+
         #endregion
 
         #region Helper methods
@@ -132,7 +148,11 @@ namespace MessyLab
             SaveLastUsername();
 
             // close this window, and open main form
-            MainForm.OpenStartPage();
+            if (showStartPage)
+            {
+                MainForm.OpenStartPage();
+            }
+            MainForm.RefreshLoginItem();
             CloseAndDispose();
         }
 
@@ -182,6 +202,7 @@ namespace MessyLab
         }
 
         #endregion
+
     }
 
     [Serializable]

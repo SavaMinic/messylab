@@ -69,7 +69,9 @@ namespace MessyLab
             ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
 
             project.Saved += UpdateItemList;
+            Paint += AssignmentsPad_Paint;
         }
+
         public AssignmentsPad() : this(null) { }
 
         #endregion
@@ -82,7 +84,20 @@ namespace MessyLab
         public void UpdateItemList()
         {
             if (Project == null) return;
-            SessionController.GetAssignments(RefreshAssignments);
+            ClearMainListView();
+            if (SessionController.IsLoggedIn)
+            {
+                lblInfo.Visible = false;
+                tbtnRefresh.Enabled = true;
+                tbtnUpload.Enabled = true;
+                SessionController.GetAssignments(RefreshAssignments);
+            }
+            else
+            {
+                lblInfo.Visible = true;
+                tbtnRefresh.Enabled = false;
+                tbtnUpload.Enabled = false;
+            }
         }
 
         private void AddToMainListView(ListViewItem it)
@@ -138,6 +153,11 @@ namespace MessyLab
         #endregion
 
         #region Event handlers
+
+        private void AssignmentsPad_Paint(object sender, PaintEventArgs e)
+        {
+            UpdateItemList();
+        }
 
         private void listView_SelectedIndexChanged(object sender, EventArgs e)
 		{

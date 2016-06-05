@@ -37,6 +37,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnOffline = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblUsername
@@ -115,12 +117,33 @@
             this.lblStatus.Text = "Loading...";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // label1
+            // 
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label1.Location = new System.Drawing.Point(12, 209);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(369, 2);
+            this.label1.TabIndex = 25;
+            // 
+            // btnOffline
+            // 
+            this.btnOffline.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOffline.Location = new System.Drawing.Point(75, 222);
+            this.btnOffline.Name = "btnOffline";
+            this.btnOffline.Size = new System.Drawing.Size(237, 27);
+            this.btnOffline.TabIndex = 26;
+            this.btnOffline.Text = "Use simulator in offline mode";
+            this.btnOffline.UseVisualStyleBackColor = true;
+            this.btnOffline.Click += new System.EventHandler(this.btnOffline_Click);
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(394, 201);
+            this.ClientSize = new System.Drawing.Size(394, 261);
             this.ControlBox = false;
+            this.Controls.Add(this.btnOffline);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.panel1);
@@ -152,5 +175,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnOffline;
     }
 }
