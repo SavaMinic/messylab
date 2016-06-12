@@ -39,13 +39,14 @@
             this.lblStatus = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnOffline = new System.Windows.Forms.Button();
+            this.btnReset = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // lblUsername
             // 
             this.lblUsername.AutoSize = true;
             this.lblUsername.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsername.Location = new System.Drawing.Point(248, 14);
+            this.lblUsername.Location = new System.Drawing.Point(250, 43);
             this.lblUsername.Name = "lblUsername";
             this.lblUsername.Size = new System.Drawing.Size(84, 21);
             this.lblUsername.TabIndex = 18;
@@ -54,7 +55,7 @@
             // btnLogin
             // 
             this.btnLogin.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLogin.Location = new System.Drawing.Point(200, 162);
+            this.btnLogin.Location = new System.Drawing.Point(200, 148);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(88, 27);
             this.btnLogin.TabIndex = 22;
@@ -66,7 +67,7 @@
             // 
             this.lblPassword.AutoSize = true;
             this.lblPassword.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPassword.Location = new System.Drawing.Point(248, 70);
+            this.lblPassword.Location = new System.Drawing.Point(250, 93);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(80, 21);
             this.lblPassword.TabIndex = 20;
@@ -74,14 +75,14 @@
             // 
             // txtUsername
             // 
-            this.txtUsername.Location = new System.Drawing.Point(214, 38);
+            this.txtUsername.Location = new System.Drawing.Point(216, 67);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(146, 20);
             this.txtUsername.TabIndex = 19;
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(214, 94);
+            this.txtPassword.Location = new System.Drawing.Point(216, 117);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(146, 20);
@@ -99,7 +100,7 @@
             // btnClose
             // 
             this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.Location = new System.Drawing.Point(294, 162);
+            this.btnClose.Location = new System.Drawing.Point(294, 148);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(88, 27);
             this.btnClose.TabIndex = 23;
@@ -110,17 +111,17 @@
             // lblStatus
             // 
             this.lblStatus.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStatus.Location = new System.Drawing.Point(190, 126);
+            this.lblStatus.Location = new System.Drawing.Point(190, 7);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(202, 21);
+            this.lblStatus.Size = new System.Drawing.Size(202, 36);
             this.lblStatus.TabIndex = 24;
-            this.lblStatus.Text = "Loading...";
+            this.lblStatus.Text = "Enter your credentials to login:";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label1
             // 
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label1.Location = new System.Drawing.Point(12, 209);
+            this.label1.Location = new System.Drawing.Point(12, 212);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(369, 2);
             this.label1.TabIndex = 25;
@@ -128,7 +129,7 @@
             // btnOffline
             // 
             this.btnOffline.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOffline.Location = new System.Drawing.Point(75, 222);
+            this.btnOffline.Location = new System.Drawing.Point(75, 225);
             this.btnOffline.Name = "btnOffline";
             this.btnOffline.Size = new System.Drawing.Size(237, 27);
             this.btnOffline.TabIndex = 26;
@@ -136,12 +137,24 @@
             this.btnOffline.UseVisualStyleBackColor = true;
             this.btnOffline.Click += new System.EventHandler(this.btnOffline_Click);
             // 
+            // btnReset
+            // 
+            this.btnReset.AutoSize = true;
+            this.btnReset.Location = new System.Drawing.Point(235, 186);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(106, 13);
+            this.btnReset.TabIndex = 27;
+            this.btnReset.TabStop = true;
+            this.btnReset.Text = "Reset your password";
+            this.btnReset.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnReset_LinkClicked);
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(394, 261);
             this.ControlBox = false;
+            this.Controls.Add(this.btnReset);
             this.Controls.Add(this.btnOffline);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblStatus);
@@ -177,5 +190,6 @@
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnOffline;
+        private System.Windows.Forms.LinkLabel btnReset;
     }
 }

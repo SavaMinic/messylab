@@ -45,7 +45,6 @@ namespace MessyLab
         public LoginForm(bool showStartPage = true)
         {
             InitializeComponent();
-            lblStatus.Visible = false;
             LoadLastUsername();
             this.showStartPage = showStartPage;
         }
@@ -65,7 +64,6 @@ namespace MessyLab
             btnLogin.Enabled = false;
             lblStatus.ForeColor = Color.Black;
             lblStatus.Text = "Syncing...";
-            lblStatus.Visible = true;
             lblStatus.Refresh();
 
             // check data
@@ -122,6 +120,11 @@ namespace MessyLab
             MainForm.Close();
         }
 
+        private void btnReset_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var reset = new ResetPasswordForm();
+            reset.ShowDialog(this);
+        }
 
         private void btnOffline_Click(object sender, EventArgs e)
         {
@@ -202,7 +205,6 @@ namespace MessyLab
         }
 
         #endregion
-
     }
 
     [Serializable]
