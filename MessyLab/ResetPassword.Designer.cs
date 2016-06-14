@@ -38,11 +38,11 @@
             // btnReset
             // 
             this.btnReset.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReset.Location = new System.Drawing.Point(23, 125);
+            this.btnReset.Location = new System.Drawing.Point(12, 125);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(125, 27);
+            this.btnReset.Size = new System.Drawing.Size(145, 27);
             this.btnReset.TabIndex = 23;
-            this.btnReset.Text = "Reset password";
+            this.btnReset.Text = "Send reset request";
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
@@ -51,7 +51,7 @@
             this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.Location = new System.Drawing.Point(163, 125);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(125, 27);
+            this.btnCancel.Size = new System.Drawing.Size(139, 27);
             this.btnCancel.TabIndex = 24;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -85,7 +85,7 @@
     "ur @student.etf.rs inbox.";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ResetPassword
+            // ResetPasswordForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -97,7 +97,7 @@
             this.Controls.Add(this.btnReset);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "ResetPassword";
+            this.Name = "ResetPasswordForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

@@ -173,6 +173,33 @@ namespace MessyLab.Session
             });
         }
 
+        public static void RequestPasswordReset(string username, Action onSuccess = null, Action<int> onError = null)
+        {
+            var request = new RestRequest("Client/RequestPasswordReset", Method.POST);
+            request.AddParameter("username", username);
+            request.AddParameter("nocache", DateTime.Now.Ticks);
+
+            Client.ExecuteAsync(request, response => {
+                if (response.ResponseStatus == ResponseStatus.Completed)
+                {
+                    GetAssignemntsData data = JsonConvert.DeserializeObject<GetAssignemntsData>(response.Content);
+                    if (data != null && data.ok)
+                    {
+                        onSuccess?.Invoke();
+                    }
+                    else
+                    {
+                        var error = JsonConvert.DeserializeObject<ErrorData>(response.Content);
+                        onError?.Invoke(error != null ? error.Error : 2);
+                    }
+                }
+                else
+                {
+                    onError?.Invoke(1);
+                }
+            });
+        }
+
         #region Post helpers
 
         public static void PostCompilationSuccess()
