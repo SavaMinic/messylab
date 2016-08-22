@@ -230,6 +230,12 @@ namespace MessyLab
 
 		private void btnUpload_Click(object sender, EventArgs e)
 		{
+			var code = "a = 0 %0D%0A org 8 %0D%0A MOV a, 666 %0D%0A OUT a %0D%0A STOP";
+			SessionController.PostAssignmentSolution(SelectedAssignment, code, UpdateItemList);
+		}
+
+		private void tbtOpenSolution_Click(object sender, EventArgs e)
+		{
 
 		}
 

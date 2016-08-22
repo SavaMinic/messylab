@@ -46,6 +46,11 @@ namespace MessyLab.Session
             public AssignmentData[] assignments;
         }
 
+		public class DefaultData
+		{
+			public bool ok;
+		}
+
         private enum ActionType
         {
             Login = 1,
@@ -172,6 +177,33 @@ namespace MessyLab.Session
                 }
             });
         }
+
+		public static void PostAssignmentSolution(AssignmentData assignment, string code, Action onSuccess = null, Action<int> onError = null)
+		{
+			if (SessionID == null) return;
+
+			var request = new RestRequest("Client/Assignments", Method.POST);
+			request.AddParameter("sessionID", SessionID);
+			request.AddParameter("assignmentID", assignment.ID);
+			request.AddParameter("code", code);
+
+			Client.ExecuteAsync(request, response =>
+			{
+				if (response.ResponseStatus == ResponseStatus.Completed)
+				{
+					var data = JsonConvert.DeserializeObject<DefaultData>(response.Content);
+					if (data != null && data.ok)
+					{
+						onSuccess();
+					}
+				}
+				else
+				{
+					var error = JsonConvert.DeserializeObject<ErrorData>(response.Content);
+					if (onError != null) onError.Invoke(error != null ? error.Error : 1);
+				}
+			});
+		}
 
         public static void RequestPasswordReset(string username, Action onSuccess = null, Action<int> onError = null)
         {

@@ -125,6 +125,7 @@
 			this.tbtUpload.Name = "tbtUpload";
 			this.tbtUpload.Size = new System.Drawing.Size(111, 22);
 			this.tbtUpload.Text = "Upload solution";
+			this.tbtUpload.Click += new System.EventHandler(this.btnUpload_Click);
 			// 
 			// tbtOpenSolution
 			// 
@@ -134,6 +135,7 @@
 			this.tbtOpenSolution.Size = new System.Drawing.Size(129, 22);
 			this.tbtOpenSolution.Text = "Open your solution";
 			this.tbtOpenSolution.ToolTipText = "Open your solution";
+			this.tbtOpenSolution.Click += new System.EventHandler(this.tbtOpenSolution_Click);
 			// 
 			// lblTitle
 			// 
@@ -201,7 +203,7 @@
 			// EndTime
 			// 
 			this.EndTime.Text = "End time";
-			this.EndTime.Width = 120;
+			this.EndTime.Width = 100;
 			// 
 			// canSendSolution
 			// 
@@ -225,6 +227,7 @@
 			this.tbtnRefresh.Name = "tbtnRefresh";
 			this.tbtnRefresh.Size = new System.Drawing.Size(66, 22);
 			this.tbtnRefresh.Text = "Refresh";
+			this.tbtnRefresh.Click += new System.EventHandler(this.tbtnRefresh_Click);
 			// 
 			// AssignmentsPad
 			// 
