@@ -120,7 +120,7 @@ namespace MessyLab
 
             foreach (var assignment in assignments)
             {
-                var it = new ListViewItem(ReferenceEquals(SelectedAssignment, assignment) ? "*" : string.Empty);
+				var it = new ListViewItem(ReferenceEquals(SelectedAssignment, assignment) ? "✓" : string.Empty);
                 it.SubItems.Add(assignment.Title);
                 it.SubItems.Add(assignment.EndTime.ToString("dd.MM.yyyy HH:mm:ss"));
                 it.SubItems.Add(assignment.SolutionCode != null ? "✓" : "");
@@ -139,7 +139,10 @@ namespace MessyLab
 
         protected void OnItemDoubleClicked()
 		{
-            ItemDoubleClicked?.Invoke();
+			if (ItemDoubleClicked != null)
+			{
+				ItemDoubleClicked.Invoke();
+			}
         }
 
         protected void OpenSelected()

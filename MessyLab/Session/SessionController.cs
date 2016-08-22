@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using static MessyLab.Platforms.BreakpointController;
+using MessyLab.Platforms;
 
 namespace MessyLab.Session
 {
@@ -111,21 +111,21 @@ namespace MessyLab.Session
                     {
                         SessionID = data.SessionID;
                         LoggedInUsername = username;
-                        onSuccess?.Invoke();
-                        OnLoggedIn?.Invoke();
+                        if (onSuccess != null) onSuccess.Invoke();
+                        if (OnLoggedIn != null) OnLoggedIn.Invoke();
                     }
                     else
                     {
-                        onError?.Invoke();
+                        if (onError != null) onError.Invoke();
                     }
                 }
                 else if (response.ResponseStatus == ResponseStatus.TimedOut)
                 {
-                    onTimeout?.Invoke();
+                    if (onTimeout != null) onTimeout.Invoke();
                 }
                 else
                 {
-                    onError?.Invoke();
+                    if (onError != null) onError.Invoke();
                 }
             });
         }
@@ -185,17 +185,17 @@ namespace MessyLab.Session
                     GetAssignemntsData data = JsonConvert.DeserializeObject<GetAssignemntsData>(response.Content);
                     if (data != null && data.ok)
                     {
-                        onSuccess?.Invoke();
+                        if (onSuccess != null) onSuccess.Invoke();
                     }
                     else
                     {
                         var error = JsonConvert.DeserializeObject<ErrorData>(response.Content);
-                        onError?.Invoke(error != null ? error.Error : 2);
+                        if (onError != null) onError.Invoke(error != null ? error.Error : 2);
                     }
                 }
                 else
                 {
-                    onError?.Invoke(1);
+                    if (onError != null) onError.Invoke(1);
                 }
             });
         }
@@ -227,12 +227,12 @@ namespace MessyLab.Session
             PostAction(ActionType.EndDebug);
         }
 
-        public static void PostAddBreakpoint(BreakpointDefinition breakpoint)
+		public static void PostAddBreakpoint(BreakpointController.BreakpointDefinition breakpoint)
         {
             PostAction(ActionType.AddBreakpoint, JObject.FromObject(new { breakpoint = breakpoint.ToMemento() }).ToString());
         }
 
-        public static void PostRemoveBreakpoint(BreakpointDefinition breakpoint)
+		public static void PostRemoveBreakpoint(BreakpointController.BreakpointDefinition breakpoint)
         {
             PostAction(ActionType.RemoveBreakpoint, JObject.FromObject(new { breakpoint = breakpoint.ToMemento() }).ToString());
         }
