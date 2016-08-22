@@ -37,6 +37,7 @@ namespace MessyLab
 
         delegate void AddToListViewCallback(ListViewItem it);
         delegate void ClearListViewCallback();
+		delegate void ToogleSelectedAssignmentPanelCallback(bool isVisible);
 
         /// <summary>
         /// Occurs when an item is double-clicked.
@@ -50,7 +51,7 @@ namespace MessyLab
         /// <summary>
         /// Selected assignment item.
         /// </summary>
-        public Assignment SelectedAssignment { get; protected set; }
+        public static Assignment SelectedAssignment { get; protected set; }
 
         public Assignment ClickedAssignment { get; protected set; }
 
@@ -89,15 +90,14 @@ namespace MessyLab
             {
                 lblInfo.Visible = false;
                 tbtnRefresh.Enabled = true;
-                tbtnUpload.Enabled = true;
                 SessionController.GetAssignments(RefreshAssignments);
             }
             else
             {
                 lblInfo.Visible = true;
                 tbtnRefresh.Enabled = false;
-                tbtnUpload.Enabled = false;
             }
+			ToogleSelectedAssignmentPanel(false);
         }
 
         private void AddToMainListView(ListViewItem it)
@@ -110,6 +110,18 @@ namespace MessyLab
             listView.Items.Clear();
         }
 
+		private void ToogleSelectedAssignmentPanel(bool isVisible)
+		{
+			pnlSelectedAssignment.Visible = isVisible && SelectedAssignment != null;
+			if (isVisible && SelectedAssignment != null)
+			{
+				lblTitle.Text = SelectedAssignment.Title;
+				txtDescription.Text = SelectedAssignment.Description;
+				tbtUpload.Enabled = SelectedAssignment.CanSendSolution;
+				tbtOpenSolution.Enabled = SelectedAssignment.SolutionCode != null && SelectedAssignment.SolutionCode != "";
+			}
+		}
+
         private void RefreshAssignments(List<Assignment> assignments)
         {
             LoadedAssignments = assignments;
@@ -118,9 +130,12 @@ namespace MessyLab
             else
                 ClearMainListView();
 
+			var hasSelected = false;
             foreach (var assignment in assignments)
             {
-				var it = new ListViewItem(ReferenceEquals(SelectedAssignment, assignment) ? "✓" : string.Empty);
+				var isSelected = SelectedAssignment != null && SelectedAssignment.ID == assignment.ID;
+				hasSelected = hasSelected || isSelected;
+				var it = new ListViewItem(isSelected ? "✓" : string.Empty);
                 it.SubItems.Add(assignment.Title);
                 it.SubItems.Add(assignment.EndTime.ToString("dd.MM.yyyy HH:mm:ss"));
                 it.SubItems.Add(assignment.SolutionCode != null ? "✓" : "");
@@ -132,9 +147,10 @@ namespace MessyLab
                     AddToMainListView(it);
             }
 
-            
-            // TODO: enable/disable 
-            //tbtnUpload.Enabled = SelectedAssignment != null;
+			if (pnlSelectedAssignment.InvokeRequired)
+				Invoke(new ToogleSelectedAssignmentPanelCallback(ToogleSelectedAssignmentPanel), new object[] { hasSelected });
+			else
+				ToogleSelectedAssignmentPanel(hasSelected);
         }
 
         protected void OnItemDoubleClicked()
@@ -159,7 +175,7 @@ namespace MessyLab
 
         private void AssignmentsPad_Paint(object sender, PaintEventArgs e)
         {
-            UpdateItemList();
+            //UpdateItemList();
         }
 
         private void listView_SelectedIndexChanged(object sender, EventArgs e)
@@ -211,6 +227,11 @@ namespace MessyLab
         {
             UpdateItemList();
         }
+
+		private void btnUpload_Click(object sender, EventArgs e)
+		{
+
+		}
 
         #endregion
     }
