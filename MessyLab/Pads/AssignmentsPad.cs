@@ -36,13 +36,8 @@ namespace MessyLab
         #region Delegates/events
 
         delegate void AddToListViewCallback(ListViewItem it);
-        delegate void ClearListViewCallback();
+        delegate void ListViewCallback();
 		delegate void ToogleSelectedAssignmentPanelCallback(bool isVisible);
-
-        /// <summary>
-        /// Occurs when an item is double-clicked.
-        /// </summary>
-        public event Action ItemDoubleClicked;
 
         #endregion
 
@@ -126,7 +121,7 @@ namespace MessyLab
         {
             LoadedAssignments = assignments;
             if (listView.InvokeRequired)
-                Invoke(new ClearListViewCallback(ClearMainListView));
+                Invoke(new ListViewCallback(ClearMainListView));
             else
                 ClearMainListView();
 
@@ -153,21 +148,14 @@ namespace MessyLab
 				ToogleSelectedAssignmentPanel(hasSelected);
         }
 
-        protected void OnItemDoubleClicked()
+		protected void SelectClickedAssignment()
 		{
-			if (ItemDoubleClicked != null)
+			if (ClickedAssignment != null)
 			{
-				ItemDoubleClicked.Invoke();
+				SelectedAssignment = ClickedAssignment;
+				RefreshAssignments(LoadedAssignments);
 			}
-        }
-
-        protected void OpenSelected()
-        {
-            if (SelectedAssignment != null)
-            {
-                OnItemDoubleClicked();
-            }
-        }
+		}
 
         #endregion
 
@@ -188,7 +176,7 @@ namespace MessyLab
 
 		private void listView_DoubleClick(object sender, EventArgs e)
 		{
-			OpenSelected();
+			SelectClickedAssignment();
 		}
 
 		private void AssignmentsPad_Load(object sender, EventArgs e)
@@ -201,25 +189,16 @@ namespace MessyLab
 			if (listView.SelectedItems.Count != 1) e.Cancel = true;
 		}
 
-		private void openToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			OpenSelected();
-		}
-
 		private void setAsMainToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (ClickedAssignment != null)
-            {
-                SelectedAssignment = ClickedAssignment;
-                RefreshAssignments(LoadedAssignments);
-            }
+			SelectClickedAssignment();
 		}
 
 		private void listView_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Enter)
 			{
-				OpenSelected();
+				SelectClickedAssignment();
 			}
 		}
 
@@ -230,13 +209,39 @@ namespace MessyLab
 
 		private void btnUpload_Click(object sender, EventArgs e)
 		{
-			var code = "a = 0 %0D%0A org 8 %0D%0A MOV a, 666 %0D%0A OUT a %0D%0A STOP";
-			SessionController.PostAssignmentSolution(SelectedAssignment, code, UpdateItemList);
+			var textEditor = (Project.MainItem.GetEditorForm() as TextEditorForm);
+			if (textEditor == null) return;
+
+			SessionController.PostAssignmentSolution(SelectedAssignment, textEditor.Editor.Text, () =>
+			{
+				if (listView.InvokeRequired)
+					Invoke(new ListViewCallback(UpdateItemList));
+				else
+					UpdateItemList();
+				MessageBox.Show("Solution uploaded successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}, err =>
+			{
+				var error = "Undefined error!";
+				switch (err)
+				{
+					case -1: error = "Invalid session!"; break;
+					case -2: error = "Can't find student, probably deactivated!"; break;
+					case 0: error = "Syntax error?"; break;
+					case 1: error = "Symbol already defined error?"; break;
+					case 2: error = "Value out of range?"; break;
+					case 3: error = "Invalid intstruction adress?"; break;
+					case 4: error = "Invalid value in branch instruction?"; break;
+					case 5: error = "Invalid value in I/O instruction?"; break;
+					case 6: error = "Program is to big?"; break;
+					case 7: error = "Symbol is not defined?"; break;
+				}
+				MessageBox.Show(error, "Failed to upload solution!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			});
 		}
 
 		private void tbtOpenSolution_Click(object sender, EventArgs e)
 		{
-
+			// todo: implement
 		}
 
         #endregion

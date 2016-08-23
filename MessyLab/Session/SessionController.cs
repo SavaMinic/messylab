@@ -25,6 +25,11 @@ namespace MessyLab.Session
             public int Error { get; set; }
         }
 
+		public class ErrorsData
+		{
+			public MessyLab.PicoComputer.Error[] errors;
+		}
+
         public class AssignmentData
         {
             public int ID;
@@ -196,11 +201,23 @@ namespace MessyLab.Session
 					{
 						onSuccess();
 					}
+					else
+					{
+						var errors = JsonConvert.DeserializeObject<ErrorsData>(response.Content);
+						if (errors != null && errors.errors.Count() > 0)
+							onError.Invoke(errors.errors[0].ID);
+						else
+							onError.Invoke(999);
+					}
 				}
 				else
 				{
-					var error = JsonConvert.DeserializeObject<ErrorData>(response.Content);
-					if (onError != null) onError.Invoke(error != null ? error.Error : 1);
+					if (onError != null)
+					{
+						var error = JsonConvert.DeserializeObject<ErrorData>(response.Content);
+						onError.Invoke(error != null ? error.Error : 999);
+					}
+
 				}
 			});
 		}
