@@ -13,9 +13,13 @@ namespace MessyLab.Session
     {
         #region Consts/Inner classes
 
+#if DEBUG
+		public const string SERVER_IP = "http://localhost:14453/";
+#else
         public const string SERVER_IP = "http://messylabadmin.azurewebsites.net/";
+#endif
 
-        public class LoginData
+		public class LoginData
         {
             public string SessionID { get; set; }
         }
