@@ -572,6 +572,16 @@ namespace MessyLab.Platforms
 			Project.Save();
 		}
 
+		public virtual void LoadSolutionToNewProjectItem(string path, string text)
+		{
+			var item = ProjectItemFactory.CreateProjectItem(Project, path);
+			Project.AddProjectItemOrReplace(item);
+			MainForm.ShowEditorFor(item);
+			var textEditor = (item.GetEditorForm() as TextEditorForm);
+			textEditor.Editor.Text = text;
+			item.Save();
+		}
+
 		/// <summary>
 		/// Adds an existing project item.
 		/// </summary>
@@ -607,7 +617,7 @@ namespace MessyLab.Platforms
 		/// Removes the specified project item.
 		/// </summary>
 		/// <param name="item">The item to remove.</param>
-		protected virtual void RemoveProjectItem(ProjectItem item)
+		public virtual void RemoveProjectItem(ProjectItem item)
 		{
 			if (item == null) return;
 			if (Project.Items.Count == 1)

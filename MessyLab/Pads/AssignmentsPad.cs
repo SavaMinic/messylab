@@ -39,6 +39,8 @@ namespace MessyLab
         delegate void ListViewCallback();
 		delegate void ToogleSelectedAssignmentPanelCallback(bool isVisible);
 
+		delegate void MessageBoxCallback(string error);
+
         #endregion
 
         #region Properites/fields
@@ -129,6 +131,7 @@ namespace MessyLab
             foreach (var assignment in assignments)
             {
 				var isSelected = SelectedAssignment != null && SelectedAssignment.ID == assignment.ID;
+				if (isSelected) { SelectedAssignment = assignment; }
 				hasSelected = hasSelected || isSelected;
 				var it = new ListViewItem(isSelected ? "✓" : string.Empty);
                 it.SubItems.Add(assignment.Title);
@@ -207,6 +210,18 @@ namespace MessyLab
             UpdateItemList();
         }
 
+		private void ShowMessageBox(string error = null)
+		{
+			if (error == null || error == "")
+			{
+				MessageBox.Show(Project.Platform.Gui.MainForm, "Solution uploaded successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+			else
+			{
+				MessageBox.Show(Project.Platform.Gui.MainForm, error, "Failed to upload solution!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+		}
+
 		private void btnUpload_Click(object sender, EventArgs e)
 		{
 			var textEditor = (Project.MainItem.GetEditorForm() as TextEditorForm);
@@ -218,7 +233,11 @@ namespace MessyLab
 					Invoke(new ListViewCallback(UpdateItemList));
 				else
 					UpdateItemList();
-				MessageBox.Show("Solution uploaded successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				if (Project.Platform.Gui.MainForm.InvokeRequired)
+					Invoke(new MessageBoxCallback(ShowMessageBox), new object[] {null});
+				else
+					ShowMessageBox();
+				
 			}, err =>
 			{
 				var error = "Undefined error!";
@@ -235,13 +254,16 @@ namespace MessyLab
 					case 6: error = "Program is to big?"; break;
 					case 7: error = "Symbol is not defined?"; break;
 				}
-				MessageBox.Show(error, "Failed to upload solution!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				if (Project.Platform.Gui.MainForm.InvokeRequired)
+					Invoke(new MessageBoxCallback(ShowMessageBox), new object[] { error });
+				else
+					ShowMessageBox(error);
 			});
 		}
 
 		private void tbtOpenSolution_Click(object sender, EventArgs e)
 		{
-			// todo: implement
+			Project.Platform.LoadSolutionToNewProjectItem(SelectedAssignment.Title, SelectedAssignment.SolutionCode);
 		}
 
         #endregion

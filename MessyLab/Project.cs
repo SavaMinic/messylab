@@ -107,6 +107,20 @@ namespace MessyLab
 			return false;
 		}
 
+		public void AddProjectItemOrReplace(ProjectItem item)
+		{
+			foreach (var i in Items)
+			{
+				if (Program.IsSamePath(i.RelativePath, item.RelativePath))
+				{
+					Platform.RemoveProjectItem(i);
+					break;
+				}
+			}
+			Items.Add(item);
+			Save();
+		}
+
 		/// <summary>
 		/// Instance of the Project's Platform.
 		/// </summary>
