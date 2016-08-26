@@ -52,7 +52,7 @@ namespace MessyLab
 
 		#region Methods
 
-		public void Refresh()
+		public void RefreshView()
 		{
 			var picoPlatform = Project.Platform as PicoPlatform;
 			if (picoPlatform == null) return;
@@ -64,7 +64,7 @@ namespace MessyLab
 				dgvMemory.Rows.Clear();
 				var memory = picoTarget.VirtualMachine.Data;
 				var startAdress = ushort.Parse(txtStartAdress.Text);
-				for (ushort i = startAdress; i < startAdress + 16 && i < Data.Size; i++)
+				for (ushort i = startAdress; i < startAdress + (ushort)16 && (int)i < Data.Size; i++)
 				{
 					ushort data = memory.DirectMemoryRead(i);
 					dgvMemory.Rows.Add(
@@ -86,7 +86,7 @@ namespace MessyLab
 
 		private void tbtnRefresh_Click(object sender, EventArgs e)
 		{
-			Refresh();
+			RefreshView();
 		}
 
 		#endregion
