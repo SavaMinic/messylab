@@ -152,6 +152,7 @@ namespace MessyLab.Platforms
 				var view = new ToolStripMenuItem("&View");
 				view.DropDownItems.Add(ProjectPad.MenuItem);
                 view.DropDownItems.Add(AssignmentsPad.MenuItem);
+				view.DropDownItems.Add(MemoryViewPad.MenuItem);
                 view.DropDownItems.Add(ErrorsPad.MenuItem);
 				view.DropDownItems.Add(TasksPad.MenuItem);
 				return view;
@@ -250,6 +251,7 @@ namespace MessyLab.Platforms
 			{
 				ToolbarItems.Add(ProjectPad.ToolbarItem);
                 ToolbarItems.Add(AssignmentsPad.ToolbarItem);
+				ToolbarItems.Add(MemoryViewPad.ToolbarItem);
                 ToolbarItems.Add(ErrorsPad.ToolbarItem);
 				ToolbarItems.Add(TasksPad.ToolbarItem);
 			}
@@ -287,6 +289,7 @@ namespace MessyLab.Platforms
 			public ErrorListPad ErrorsPad { get; protected set; }
 			public TaskListPad TasksPad { get; protected set; }
             public AssignmentsPad AssignmentsPad { get; protected set; }
+			public MemoryViewPad MemoryViewPad { get; protected set; }
 
             #region Pad Save/Restore
 
@@ -307,6 +310,8 @@ namespace MessyLab.Platforms
 						return ErrorsPad;
                     case "MessyLab.AssignmentsPad":
                         return AssignmentsPad;
+					case "MessyLab.MemoryViewPad":
+						return MemoryViewPad;
                     default:
 						return null;
 				}
@@ -363,6 +368,7 @@ namespace MessyLab.Platforms
                 AssignmentsPad.ShowOnMainForm();
                 TasksPad.ShowOnMainForm();
 				ErrorsPad.ShowOnMainForm();
+				MemoryViewPad.ShowOnMainForm();
 			}
 
 			/// <summary>
@@ -395,6 +401,9 @@ namespace MessyLab.Platforms
 
                 AssignmentsPad = new AssignmentsPad(Platform.Project);
                 Pads.Add(AssignmentsPad);
+
+				MemoryViewPad = new MemoryViewPad(Platform.Project);
+				Pads.Add(MemoryViewPad);
             }
 
 			public List<Pad> Pads { get; set; }

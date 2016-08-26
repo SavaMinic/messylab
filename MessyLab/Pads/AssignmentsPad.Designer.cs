@@ -60,13 +60,13 @@
 			this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.setAsMainToolStripMenuItem});
 			this.contextMenuStrip.Name = "contextMenuStrip";
-			this.contextMenuStrip.Size = new System.Drawing.Size(153, 48);
+			this.contextMenuStrip.Size = new System.Drawing.Size(152, 26);
 			this.contextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_Opening);
 			// 
 			// setAsMainToolStripMenuItem
 			// 
 			this.setAsMainToolStripMenuItem.Name = "setAsMainToolStripMenuItem";
-			this.setAsMainToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.setAsMainToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
 			this.setAsMainToolStripMenuItem.Text = "Set as Selected";
 			this.setAsMainToolStripMenuItem.Click += new System.EventHandler(this.setAsMainToolStripMenuItem_Click);
 			// 
@@ -77,13 +77,15 @@
 			// 
 			// pnlSelectedAssignment
 			// 
+			this.pnlSelectedAssignment.AutoSize = true;
 			this.pnlSelectedAssignment.Controls.Add(this.txtDescription);
 			this.pnlSelectedAssignment.Controls.Add(this.tstAssignmentStrip);
 			this.pnlSelectedAssignment.Controls.Add(this.lblTitle);
 			this.pnlSelectedAssignment.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.pnlSelectedAssignment.Location = new System.Drawing.Point(0, 229);
+			this.pnlSelectedAssignment.Location = new System.Drawing.Point(0, 209);
+			this.pnlSelectedAssignment.MinimumSize = new System.Drawing.Size(284, 276);
 			this.pnlSelectedAssignment.Name = "pnlSelectedAssignment";
-			this.pnlSelectedAssignment.Size = new System.Drawing.Size(267, 276);
+			this.pnlSelectedAssignment.Size = new System.Drawing.Size(284, 276);
 			this.pnlSelectedAssignment.TabIndex = 3;
 			// 
 			// txtDescription
@@ -94,7 +96,7 @@
 			this.txtDescription.Name = "txtDescription";
 			this.txtDescription.ReadOnly = true;
 			this.txtDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.txtDescription.Size = new System.Drawing.Size(267, 218);
+			this.txtDescription.Size = new System.Drawing.Size(284, 218);
 			this.txtDescription.TabIndex = 5;
 			this.txtDescription.Text = "testing description of assignment";
 			// 
@@ -105,7 +107,7 @@
             this.tbtOpenSolution});
 			this.tstAssignmentStrip.Location = new System.Drawing.Point(0, 27);
 			this.tstAssignmentStrip.Name = "tstAssignmentStrip";
-			this.tstAssignmentStrip.Size = new System.Drawing.Size(267, 25);
+			this.tstAssignmentStrip.Size = new System.Drawing.Size(284, 25);
 			this.tstAssignmentStrip.TabIndex = 4;
 			this.tstAssignmentStrip.Text = "tstAssignmentStrip";
 			// 
@@ -124,7 +126,7 @@
 			this.tbtOpenSolution.Image = global::MessyLab.Properties.Resources.ProjectExplorer;
 			this.tbtOpenSolution.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tbtOpenSolution.Name = "tbtOpenSolution";
-			this.tbtOpenSolution.Size = new System.Drawing.Size(129, 22);
+			this.tbtOpenSolution.Size = new System.Drawing.Size(125, 22);
 			this.tbtOpenSolution.Text = "View your solution";
 			this.tbtOpenSolution.ToolTipText = "View your uploaded solution";
 			this.tbtOpenSolution.Click += new System.EventHandler(this.tbtOpenSolution_Click);
@@ -135,7 +137,7 @@
 			this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblTitle.Location = new System.Drawing.Point(0, 0);
 			this.lblTitle.Name = "lblTitle";
-			this.lblTitle.Size = new System.Drawing.Size(267, 27);
+			this.lblTitle.Size = new System.Drawing.Size(284, 27);
 			this.lblTitle.TabIndex = 2;
 			this.lblTitle.Text = "Test name";
 			this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -147,8 +149,9 @@
 			this.pnlMain.Controls.Add(this.tstMainStrip);
 			this.pnlMain.Dock = System.Windows.Forms.DockStyle.Top;
 			this.pnlMain.Location = new System.Drawing.Point(0, 0);
+			this.pnlMain.MinimumSize = new System.Drawing.Size(284, 205);
 			this.pnlMain.Name = "pnlMain";
-			this.pnlMain.Size = new System.Drawing.Size(267, 205);
+			this.pnlMain.Size = new System.Drawing.Size(284, 205);
 			this.pnlMain.TabIndex = 4;
 			// 
 			// lblInfo
@@ -176,7 +179,7 @@
 			this.listView.Location = new System.Drawing.Point(0, 25);
 			this.listView.MultiSelect = false;
 			this.listView.Name = "listView";
-			this.listView.Size = new System.Drawing.Size(267, 180);
+			this.listView.Size = new System.Drawing.Size(284, 180);
 			this.listView.TabIndex = 6;
 			this.listView.UseCompatibleStateImageBehavior = false;
 			this.listView.View = System.Windows.Forms.View.Details;
@@ -208,7 +211,7 @@
             this.tbtnRefresh});
 			this.tstMainStrip.Location = new System.Drawing.Point(0, 0);
 			this.tstMainStrip.Name = "tstMainStrip";
-			this.tstMainStrip.Size = new System.Drawing.Size(267, 25);
+			this.tstMainStrip.Size = new System.Drawing.Size(284, 25);
 			this.tstMainStrip.TabIndex = 5;
 			this.tstMainStrip.Text = "toolStrip";
 			// 
@@ -244,6 +247,7 @@
 			this.tstMainStrip.ResumeLayout(false);
 			this.tstMainStrip.PerformLayout();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 

@@ -41,7 +41,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -142,6 +142,12 @@
     </Compile>
     <Compile Include="Pads\AssignmentsPad.Designer.cs">
       <DependentUpon>AssignmentsPad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pads\MemoryViewPad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pads\MemoryViewPad.Designer.cs">
+      <DependentUpon>MemoryViewPad.cs</DependentUpon>
     </Compile>
     <Compile Include="Pads\WatchPad.cs">
       <SubType>Form</SubType>
@@ -289,6 +295,9 @@
     <EmbeddedResource Include="Pads\ListPad.resx">
       <DependentUpon>ListPad.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Pads\MemoryViewPad.resx">
+      <DependentUpon>MemoryViewPad.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Pads\Pad.resx">
       <DependentUpon>Pad.cs</DependentUpon>
     </EmbeddedResource>
@@ -406,6 +415,8 @@
     <Content Include="Platforms\Pico\Empty.pca">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Memory.png" />
+    <None Include="Resources\Memory.bmp" />
     <None Include="Resources\Assignments.png" />
     <None Include="Resources\Assignments.bmp" />
   </ItemGroup>
