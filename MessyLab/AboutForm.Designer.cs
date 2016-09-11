@@ -39,6 +39,8 @@
 			this.label5 = new System.Windows.Forms.Label();
 			this.licenseLinkLabel = new System.Windows.Forms.LinkLabel();
 			this.infoLinkLabel = new System.Windows.Forms.LinkLabel();
+			this.label6 = new System.Windows.Forms.Label();
+			this.label7 = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// okButton
@@ -88,7 +90,7 @@
 			// 
 			this.label4.AutoSize = true;
 			this.label4.BackColor = System.Drawing.Color.Transparent;
-			this.label4.Location = new System.Drawing.Point(14, 255);
+			this.label4.Location = new System.Drawing.Point(14, 297);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(117, 17);
 			this.label4.TabIndex = 4;
@@ -107,7 +109,7 @@
 			// 
 			this.homeLinkLabel.AutoSize = true;
 			this.homeLinkLabel.BackColor = System.Drawing.Color.Transparent;
-			this.homeLinkLabel.Location = new System.Drawing.Point(14, 272);
+			this.homeLinkLabel.Location = new System.Drawing.Point(14, 314);
 			this.homeLinkLabel.Name = "homeLinkLabel";
 			this.homeLinkLabel.Size = new System.Drawing.Size(120, 17);
 			this.homeLinkLabel.TabIndex = 1;
@@ -125,7 +127,7 @@
 			this.label5.Size = new System.Drawing.Size(213, 65);
 			this.label5.TabIndex = 7;
 			this.label5.Text = "This software is distributed under the\r\nterms of the Apache License Version 2.0.\r" +
-				"\n\r\nA copy of the license is available at the\r\nfollowing address:";
+    "\n\r\nA copy of the license is available at the\r\nfollowing address:";
 			// 
 			// licenseLinkLabel
 			// 
@@ -144,13 +146,33 @@
 			// 
 			this.infoLinkLabel.AutoSize = true;
 			this.infoLinkLabel.BackColor = System.Drawing.Color.Transparent;
-			this.infoLinkLabel.Location = new System.Drawing.Point(14, 319);
+			this.infoLinkLabel.Location = new System.Drawing.Point(14, 339);
 			this.infoLinkLabel.Name = "infoLinkLabel";
 			this.infoLinkLabel.Size = new System.Drawing.Size(138, 17);
 			this.infoLinkLabel.TabIndex = 2;
 			this.infoLinkLabel.TabStop = true;
 			this.infoLinkLabel.Text = "Additional Information";
 			this.infoLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.infoLinkLabel_LinkClicked);
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.BackColor = System.Drawing.Color.Transparent;
+			this.label6.Location = new System.Drawing.Point(14, 277);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(118, 17);
+			this.label6.TabIndex = 9;
+			this.label6.Text = "© 2016 Sava Minić";
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.BackColor = System.Drawing.Color.Transparent;
+			this.label7.Location = new System.Drawing.Point(14, 260);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(73, 17);
+			this.label7.TabIndex = 8;
+			this.label7.Text = "Version 2.0";
 			// 
 			// AboutForm
 			// 
@@ -160,6 +182,8 @@
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			this.CancelButton = this.okButton;
 			this.ClientSize = new System.Drawing.Size(474, 512);
+			this.Controls.Add(this.label6);
+			this.Controls.Add(this.label7);
 			this.Controls.Add(this.infoLinkLabel);
 			this.Controls.Add(this.licenseLinkLabel);
 			this.Controls.Add(this.label5);
@@ -198,5 +222,7 @@
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.LinkLabel licenseLinkLabel;
 		private System.Windows.Forms.LinkLabel infoLinkLabel;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.Label label7;
 	}
 }
